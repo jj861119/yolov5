@@ -179,9 +179,9 @@ def start_server(port, server_args):
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=8888, help='ports corresponding to servers')
-    parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='(optional) dataset.yaml path')
+    parser.add_argument('--data', type=str, default=ROOT / 'data/ALPR.yaml', help='(optional) dataset.yaml path')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s_alpr.pt', help='model path or triton URL')
+    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
     opt = parser.parse_args()
