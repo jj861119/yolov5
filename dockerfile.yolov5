@@ -1,0 +1,18 @@
+FROM nvcr.io/nvidia/l4t-pytorch:r32.6.1-pth1.9-py3
+RUN apt update && DEBIAN_FRONTEND=noninteractive TZ=Asia/Taipei apt install --no-install-recommends -y software-properties-common 
+RUN add-apt-repository ppa:deadsnakes/ppa
+# RUN apt remove --no-install-recommends -y python3.8
+RUN apt update
+RUN git clone https://github.com/jj861119/yolov5.git /home/yolov5
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.6 1
+# RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+RUN apt install --no-install-recommends -y python3.6-dev python3.6-distutils python3-pip python3-matplotlib
+RUN DEBIAN_FRONTEND=noninteractive TZ=Asia/Taipei apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
+
+WORKDIR /home/yolov5
+RUN pip3 install --upgrade pip
+RUN pip3 install --no-cache -r requirements_prune.txt
+RUN pip3 install ultralytics
+RUN pip3 install opencv-python==4.5.5.64 opencv-python-headless==4.5.5.64
+RUN mkdir runs
+CMD ["python3", "detect_server_simple.py"]
