@@ -13,4 +13,4 @@ ENV LANG=en_US.UTF-8
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache -r requirements_prune.txt
 RUN mkdir runs
-CMD ["python3", "detect_server_simple.py"]
+CMD ["python3", "detect_server_alpr.py"]
