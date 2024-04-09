@@ -170,7 +170,7 @@ class Detector():
 def start_server(port, server_args):
     global detector
     detector = Detector(**server_args)
-    s = procbridge.Server('127.0.0.1', port, delegate)
+    s = procbridge.Server('0.0.0.0', port, delegate)
     s.start(daemon=False)
     print(f'Server is on {port}...')
 
