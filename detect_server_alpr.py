@@ -124,7 +124,7 @@ class Detector():
         # Run inference
         model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
         seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
-        res_list = list()
+        res_dict = dict()
 
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
@@ -145,21 +145,24 @@ class Detector():
         for i, det in enumerate(pred):  # per image
             seen += 1
             # annotator = Annotator(im0, line_width=line_thickness, example=str(names))
+            det = det.cpu().numpy()
             det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape)
-            for item in det:
+            for id, item in enumerate(det):
                 res = dict()
-                pos = [i for i in item[:4]]
+                pos = [item[0], item[1], item[2]-item[0], item[3]-item[1]]
+                pos = list(map(float, pos))
                 res['position'] = pos
                 res['type'] = names[int(item[5])]
-                res['confidence'] = item[4]
+                res['confidence'] = float(item[4])
                 LOGGER.info(str(res))
-                res_list.append(res)
+                res_dict[id] = res
             LOGGER.info(f'---------------------{im0.shape}')
 
-        return json.dumps(res_list)
+        return json.dumps(res_dict)
 
 
 def start_server(port, server_args):
+    global detector
     detector = Detector(**server_args)
     s = procbridge.Server('127.0.0.1', port, delegate)
     s.start(daemon=False)
@@ -201,7 +204,6 @@ def main():
     args = vars(parse_opt())
     port = args['port']
     del args['port']
-    global detector
     start_server(port, args)
 
 if __name__ == "__main__":
