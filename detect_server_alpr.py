@@ -78,8 +78,8 @@ class Detector():
         self.weights = weights
         self.model = Detector.load_model(weights, device, dnn, data, half)
 
-    def update_model(self, weights=['./yolov5s.pt'], key=None, iv=None):
-        self.weights = Path(weights[0])
+    def update_model(self, weights='./yolov5s.pt', key=None, iv=None):
+        self.weights = Path(weights)
         if key and iv:
             self.model = Detector.load_model(weights, key=key.encode('utf-8'), iv=str.encode(iv))
         else:
