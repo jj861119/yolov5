@@ -69,7 +69,7 @@ class Detector():
     def __init__(self,
             device='',  # cuda device, i.e. 0 or 0,1,2,3 or cpu
             dnn=False,  # use OpenCV DNN for ONNX inference
-            weights=ROOT / 'yolov5s_alpr.pt',  # model path or triton URL
+            weights=ROOT / 'yolov5s.pt',  # model path or triton URL
             data=ROOT / 'data/ALPR.yaml',  # dataset.yaml path
             half=False,  # use FP16 half-precision inference
     ):
@@ -78,7 +78,7 @@ class Detector():
         self.weights = weights
         self.model = Detector.load_model(weights, device, dnn, data, half)
 
-    def update_model(self, weights=['./yolov5s_alpr.pt'], key=None, iv=None):
+    def update_model(self, weights=['./yolov5s.pt'], key=None, iv=None):
         self.weights = Path(weights[0])
         if key and iv:
             self.model = Detector.load_model(weights, key=key.encode('utf-8'), iv=str.encode(iv))
