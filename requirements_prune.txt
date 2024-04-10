@@ -8,7 +8,6 @@ scipy==1.5.4
 tqdm==4.64.1 
 pandas==1.1.5 
 seaborn==0.11.2
-procbridge==1.2.1
 opencv-python==4.5.5.64 
 opencv-python-headless==4.5.5.64
 
