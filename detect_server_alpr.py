@@ -162,7 +162,7 @@ class Detector():
                 res['confidence'] = float(item[4])
                 LOGGER.info(str(res))
                 res_dict[id] = res
-            LOGGER.info(f'---------------------{im0.shape}')
+            LOGGER.info(f'---------------------{im.shape}')
 
         return json.dumps(res_dict)
 
