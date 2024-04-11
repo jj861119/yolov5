@@ -131,6 +131,7 @@ class Detector():
         model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
         seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
         res_dict = dict()
+        res_dict['result'] = []
 
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
@@ -161,7 +162,7 @@ class Detector():
                 res['type'] = names[int(item[5])]
                 res['confidence'] = float(item[4])
                 LOGGER.info(str(res))
-                res_dict[id] = res
+                res_dict['result'].append(res)
             LOGGER.info(f'---------------------{im.shape}')
 
         return json.dumps(res_dict)
