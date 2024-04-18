@@ -9,10 +9,12 @@
 # Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
 path: D:/datasets/ # dataset root dir
 train: 
-  -  PASCAL_VOC2012/ALPR/images
-  -  coco_aisdit/train/images
-  -  coco_aisdit/coco-yolov5-train3000/images
-val: D:/datasets/MAAS_smart_pole/images
+  -  PASCAL_VOC2012/ALPR_truck/images
+  -  coco_aisdit_truck/train_kelvin/images
+  -  coco_aisdit_truck/coco-yolov5-train3000/images
+  -  robo_bus/images
+# val: MAAS_smart_pole_truck/images
+val: coco_aisdit_truck/val/images
 
 # Classes
 names:
@@ -21,4 +23,5 @@ names:
   2: motorcycle
   3: bicycle
   4: bus
+  5: truck
 
