@@ -1,6 +1,7 @@
 import procbridge
 import base64
 import cv2
+import numpy as np
 
 def cv2_base64(image):
     base64_str = cv2.imencode('.jpg', image)[1].tobytes()
@@ -8,16 +9,17 @@ def cv2_base64(image):
     base64_str = str(base64_str, 'utf-8')
     return base64_str
 
+def base64_cv2(base64_str):
+    imgString = base64.b64decode(base64_str)
+    nparr = np.fromstring(imgString, np.uint8)  
+    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    return image
+
 def main():
     client = procbridge.Client('127.0.0.1', 8888)
-    # img = cv2.imread("/mnt/images/img000410.jpg")
-    img = cv2.imread("E:/datasets/MAAS_smart_pole/test_set/img000410.jpg")
+    img = cv2.imread("/mnt/images/img000410.jpg")
     img_64 = cv2_base64(img)
-    result = client.request('detect', {'source': img_64})  
-    print(result)
-
-    # 未來若有需要更換模型可使用
-    # client.request('load_model', {'weights':'models/yolov5n6.pt'}) 
+    client.request('detect', {'source': img_64})   
     
 
 if __name__ == "__main__":
